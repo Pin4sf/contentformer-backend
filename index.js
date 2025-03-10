@@ -20,6 +20,24 @@ app.use(cors({
   credentials: true
 }));
 
+app.get('/api/test', (req, res) => {
+  // Log request details
+  console.log('Test endpoint hit from:', req.headers.origin);
+  console.log('Request headers:', req.headers);
+  
+  // Send response with CORS headers for visibility
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  res.status(200).json({ 
+    status: 'ok',
+    message: 'Backend is accessible',
+    time: new Date().toISOString(),
+    origin: req.headers.origin || 'unknown'
+  });
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
