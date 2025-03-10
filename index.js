@@ -9,11 +9,17 @@ dotenv.config();
 const app = express();
 
 // Configure middleware
-app.use(express.json({ limit: '10mb' }));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://your-contentformer-app.vercel.app',
+  origin: [
+    'https://loom-converter.vercel.app',
+    'https://contentformer.vercel.app',
+    'http://localhost:3000'  // For local development
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
+
 
 // Health check endpoint
 app.get('/health', (req, res) => {
